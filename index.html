@@ -3,14 +3,14 @@
 <meta name="description" content="KITESTAI — o‘zbek tilidagi sun’iy intellekt yordamchisi: chat, test yaratish, rasm, slayd, kod yozish, tarjima va ovozli yozish. 30 tilda. Yaratuvchi: Jumaqulov Behruz.">
 <meta name="keywords" content="KITESTAI, KITEST, sun’iy intellekt, AI chat, o‘zbek AI, Jumaqulov Behruz, test yaratish, ta’lim">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://kitestai.vercel.app/">
+<link rel="canonical" href="https://jumaqulovbehruz831-a11y.github.io/AI/">
 <meta property="og:type" content="website"><meta property="og:title" content="KITESTAI — Sun’iy intellekt yordamchisi"><meta property="og:description" content="Chat, test, rasm, slayd, kod va tarjima — 30 tilda, o‘zbek tilida.">
-<meta property="og:url" content="https://kitestai.vercel.app/"><meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://jumaqulovbehruz831-a11y.github.io/AI/"><meta name="twitter:card" content="summary">
 <meta name="theme-color" content="#070521">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='17' fill='%23150f45'/%3E%3Cpath d='M19 15v34M19 33L43 15M26 29l18 20' stroke='%238d6bff' stroke-width='7' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
 <!-- Google Search Console tasdiqlash: quyidagi qatorni o‘zingizning kodingiz bilan almashtiring -->
 <!-- <meta name="google-site-verification" content="BU_YERGA_KOD"> -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"KITESTAI","url":"https://kitestai.vercel.app/","applicationCategory":"EducationalApplication","operatingSystem":"Web","description":"O‘zbek tilidagi sun’iy intellekt yordamchisi","inLanguage":"uz","creator":{"@type":"Person","name":"Jumaqulov Behruz Xurshidjonovich"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"KITESTAI","url":"https://jumaqulovbehruz831-a11y.github.io/AI/","applicationCategory":"EducationalApplication","operatingSystem":"Web","description":"O‘zbek tilidagi sun’iy intellekt yordamchisi","inLanguage":"uz","creator":{"@type":"Person","name":"Jumaqulov Behruz Xurshidjonovich"}}</script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>
@@ -139,7 +139,7 @@ textarea{flex:1;resize:none;background:none;border:0;outline:none;padding:10px 6
 <button class="pri" data-close>Yopish</button></div></div>
 <div class="dlg" id="d_prof"><div><h3 style="margin-top:0">Profil</h3><p id="p_info"></p><button class="pri" id="p_out">Hisobdan chiqish</button><br><br><button class="pri" data-close style="background:var(--card2)">Yopish</button></div></div>
 <div class="dlg" id="d_set"><div><h3 style="margin-top:0">Sozlamalar</h3>
-<label>Javob tili (30 ta)</label><select id="lang"></select>
+<label>API kalit (ixtiyoriy, console.anthropic.com)</label><input id="s_key" type="password" placeholder="sk-ant-..." style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);background:var(--bg);margin:6px 0 8px"><button class="pri" id="s_ks" style="margin-bottom:6px">Kalitni saqlash</button><div style="font-size:12px;color:var(--mu);margin-bottom:12px">Kalit faqat shu brauzerda saqlanadi. Faylni boshqalarga bermang.</div><label>Javob tili (30 ta)</label><select id="lang"></select>
 <button class="pri" id="s_th" style="margin-bottom:10px">🌓 Mavzuni almashtirish</button>
 <button class="pri" id="s_clr" style="background:var(--card2);margin-bottom:10px">🗑 Suhbatni tozalash</button>
 <button class="pri" data-close>Yopish</button></div></div>
@@ -191,7 +191,7 @@ function md(t){var p=t.split("```"),h="";p.forEach(function(x,i){if(i%2)h+="<pre
 document.querySelectorAll("[data-d]").forEach(function(b){b.onclick=function(){if(b.dataset.d==="d_prof")$("p_info").innerHTML="<b>"+esc(user.name)+"</b><br>"+esc(user.email);$(b.dataset.d).classList.add("on");$("side").classList.remove("open")}});
 document.querySelectorAll("[data-close]").forEach(function(b){b.onclick=function(){b.closest(".dlg").classList.remove("on")}});
 function theme(){var r=document.documentElement,d=r.dataset.theme;r.dataset.theme=(d==="light"||(!d&&matchMedia("(prefers-color-scheme: light)").matches))?"dark":"light"}
-$("s_th").onclick=theme;
+$("s_th").onclick=theme;$("s_key").value=sget("k_key")||"";$("s_ks").onclick=function(){window.__k=$("s_key").value.trim().replace(/^["']|["']$/g,"");sset("k_key",window.__k);$("s_ks").textContent="✓ Saqlandi";setTimeout(function(){$("s_ks").textContent="Kalitni saqlash"},1500)};
 /* auth */
 var user=null,tab="in";
 async function hash(s){try{var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode("kitestai|"+s));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
@@ -249,9 +249,18 @@ function sys(){var s="Sen KITESTAI — foydali, aqlli sun’iy intellekt yordamc
 if(mode==="code")s+=" Rejim: dasturlash yordamchisi.";if(mode==="edu")s+=" Rejim: o‘qituvchi — mavzuni oddiy tushuntir, misollar va qisqa mashq ber.";if(mode==="tr")s+=" Rejim: foydalanuvchi matnini "+L.value+" tiliga tarjima qil, faqat tarjimani yoz.";if(mode==="test")s+=" Rejim: mavzu bo‘yicha A/B/C/D variantli test tuz, oxirida javoblar kaliti.";return s}
 async function API(input,opts){
 var messages=typeof input==="string"?[{role:"user",content:input}]:input;
-var r=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:messages})});
-if(!r.ok){throw {code:r.status===429?"rate_limited":"error"}}
-var j=await r.json();if(opts&&opts.onText)opts.onText({text:j.text});return{text:j.text,truncated:false}}
+var key=(window.__k||sget("k_key")||"").trim(),text=null;
+if(key){
+var r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-sonnet-5-5",max_tokens:4000,messages:messages})});
+if(r.status===401||r.status===403)throw{code:"badkey"};
+if(r.status===429)throw{code:"rate_limited"};
+if(!r.ok)throw{code:"error"};
+var j=await r.json();text=(j.content||[]).filter(function(x){return x.type==="text"}).map(function(x){return x.text}).join("\n")
+}else{
+if(location.protocol!=="file:"){try{var r2=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:messages})});if(r2.ok)text=(await r2.json()).text;else if(r2.status===429)throw{code:"rate_limited"}}catch(e){if(e&&e.code)throw e}}
+if(!text){try{var r3=await fetch("https://text.pollinations.ai/openai",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"openai",messages:messages})});if(r3.ok){var j3=await r3.json();text=j3.choices&&j3.choices[0]&&j3.choices[0].message&&j3.choices[0].message.content}}catch(e){}}
+if(!text)throw{code:"nokey"}}
+if(opts&&opts.onText)opts.onText({text:text});return{text:text,truncated:false}}
 API.json=async function(input,opts){var r=await API(input,opts);var t=r.text.replace(/```json|```/g,"").trim();var a=t.indexOf("{"),b=t.lastIndexOf("}");return JSON.parse(t.slice(a,b+1))};
 async function getS(){return API}
 async function send(){
@@ -274,7 +283,7 @@ var msgs=hist.slice(-12).map(function(x,i,arr){return i===arr.length-1&&x.role==
 while(msgs.length&&msgs[0].role!=="user")msgs.shift();
 var r2=await S(msgs,{cache:false,onText:function(o){box.innerHTML=md(o.text);CH.scrollTop=1e9}});
 box.innerHTML=md(r2.text);hist.push({role:"assistant",content:r2.text});acts(box,r2.text)}
-}catch(e){box.textContent="Xatolik: "+((e&&e.code==="rate_limited")?"juda ko‘p so‘rov, biroz kuting.":(e&&e.code==="not_granted")?"ruxsat berilmadi.":"qayta urinib ko‘ring.");if(mode!=="img"&&mode!=="slide")hist.pop()}
+}catch(e){box.textContent="Xatolik: "+((e&&e.code==="nokey")?"Bepul AI hozir javob bermadi. Birozdan keyin urinib ko‘ring yoki Sozlamalarda o‘z API kalitingizni kiriting.":(e&&e.code==="badkey")?"API kalit noto‘g‘ri yoki balans yo‘q.":(e&&e.code==="rate_limited")?"juda ko‘p so‘rov, biroz kuting.":(e&&e.code==="not_granted")?"ruxsat berilmadi.":"qayta urinib ko‘ring.");if(mode!=="img"&&mode!=="slide")hist.pop()}
 busy=false;CH.scrollTop=1e9}
 function deck(box,j){var i=0,S=j.slides||[];box.innerHTML="<b>"+esc(j.title||"Slayd")+"</b>";
 var w=document.createElement("div");w.className="deck";var s=document.createElement("div");s.className="sl";var n=document.createElement("div");n.className="dn";
